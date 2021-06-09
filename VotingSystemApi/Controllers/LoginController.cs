@@ -24,6 +24,7 @@ namespace VotingSystemApi.Controllers
                 {
                     token = auth.GenerateJSONWebToken(user.Id, user.UserName),
                     user = user,
+                    us = user
                 };
             }
              
