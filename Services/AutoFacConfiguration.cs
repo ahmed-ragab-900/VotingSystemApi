@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Microsoft.AspNetCore.Http;
 using VotingSystemApi.Services.Account;
-using VotingSystemApi.Services.Candidate;
+using VotingSystemApi.Services.Candidates;
 using VotingSystemApi.Services.Commissions;
 using VotingSystemApi.Services.Elections;
 using VotingSystemApi.Services.Posts;
