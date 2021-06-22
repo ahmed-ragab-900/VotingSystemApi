@@ -11,6 +11,7 @@ namespace VotingSystemApi.Models
         {
             Candidates = new HashSet<Candidate>();
             Complaints = new HashSet<Complaint>();
+            PostComments = new HashSet<PostComment>();
             PostLikes = new HashSet<PostLike>();
             Posts = new HashSet<Post>();
             StudentUnions = new HashSet<StudentUnion>();
@@ -37,6 +38,7 @@ namespace VotingSystemApi.Models
         public virtual UserRole Role { get; set; }
         public virtual ICollection<Candidate> Candidates { get; set; }
         public virtual ICollection<Complaint> Complaints { get; set; }
+        public virtual ICollection<PostComment> PostComments { get; set; }
         public virtual ICollection<PostLike> PostLikes { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<StudentUnion> StudentUnions { get; set; }

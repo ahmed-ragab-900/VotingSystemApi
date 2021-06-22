@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_PublishTargetUrl>H:\Publish\VotingSystem</_PublishTargetUrl>
+    <History>True|2021-06-21T15:02:55.0432525Z;True|2021-06-21T14:17:27.3810106+02:00;True|2021-06-20T20:06:23.4571637+02:00;True|2021-06-20T19:52:54.9086754+02:00;True|2021-06-20T19:10:04.1715496+02:00;True|2021-06-20T18:36:09.2904249+02:00;True|2021-06-16T01:49:53.9685008+02:00;True|2021-06-13T23:05:04.3807156+02:00;True|2021-06-13T23:03:58.8247340+02:00;True|2021-06-13T23:02:02.5062539+02:00;True|2021-06-13T23:01:40.2758010+02:00;True|2021-06-13T22:59:17.0786651+02:00;True|2021-06-13T22:39:45.9025144+02:00;True|2021-06-13T22:22:57.8946251+02:00;True|2021-06-10T17:02:55.0652206+02:00;True|2021-06-10T16:31:12.3887760+02:00;</History>
+  </PropertyGroup>
+</Project>

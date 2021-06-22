@@ -17,6 +17,8 @@ namespace VotingSystemApi.Models
         public string Description { get; set; }
         public string UserId { get; set; }
         public DateTime? Date { get; set; }
+        public bool? IsDeleted { get; set; }
+        public bool? IsSolved { get; set; }
 
         public virtual User User { get; set; }
         public virtual ICollection<ComplaintImage> ComplaintImages { get; set; }

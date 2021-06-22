@@ -9,6 +9,14 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
+using AutoMapper;
+using VotingSystemApi.Services;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Autofac.Extensions.DependencyInjection;
+using Autofac;
+using Microsoft.EntityFrameworkCore;
+using VotingSystemApi.Models;
 
 namespace VotingSystemApi
 {
@@ -17,16 +25,22 @@ namespace VotingSystemApi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-            contentRoot = configuration.GetValue<string>(WebHostDefaults.ContentRootKey);
         }
 
         public static IConfiguration Configuration;
-        public static string contentRoot;
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddCors();
+            services.AddControllersWithViews();
+            services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
+
+            services.AddDbContext<VotintSystemContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("VotingSystem")));
+
+
+            #region Swagger Confuration
             services.AddSwaggerGen(c =>
             {
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -39,27 +53,23 @@ namespace VotingSystemApi
                 });
 
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
-{
-    {
-        new OpenApiSecurityScheme
-        {
-            Reference = new OpenApiReference
-            {
-                Type = ReferenceType.SecurityScheme,
-                Id = "Bearer"
-            }
-        },
-        new string[] { }
-    }
-});
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] { }
+                    }
+                });
             });
+            #endregion
 
-            services.AddAuthorization(auth =>
-            {
-                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
-                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
-                    .RequireAuthenticatedUser().Build());
-            });
+            #region Authentication Configuration
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -77,6 +87,25 @@ namespace VotingSystemApi
                     IssuerSigningKey = new SymmetricSecurityKey(signingKey)
                 };
             });
+
+            services.AddAuthorization(auth =>
+            {
+                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme‌​)
+                    .RequireAuthenticatedUser().Build());
+            });
+            #endregion
+
+            #region Autofac Configuration
+            // Registe our services with Autofac container
+            ContainerBuilder builder = new ContainerBuilder();
+            builder.RegisterModule(new AutoFacConfiguration());
+            builder.Populate(services);
+            IContainer container = builder.Build();
+
+            //Create the IServiceProvider based on the container.
+            return new AutofacServiceProvider(container);
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -87,16 +116,40 @@ namespace VotingSystemApi
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(builder =>
+                builder.AllowAnyOrigin()
+                       .AllowAnyHeader()
+                       .AllowAnyMethod());
+
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            #region Access Directory Files
+            app.UseStaticFiles();
+            // For the wwwroot folder
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                            Path.Combine(Directory.GetCurrentDirectory(), "images")),
+                RequestPath = "/images"
+            });
+            //Enable directory browsing
+            //app.UseDirectoryBrowser(new DirectoryBrowserOptions
+            //{
+            //    FileProvider = new PhysicalFileProvider(
+            //                Path.Combine(Directory.GetCurrentDirectory(), "images")),
+            //    RequestPath = "/images"
+            //});
+            #endregion
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Document"));

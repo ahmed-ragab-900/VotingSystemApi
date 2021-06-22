@@ -25,6 +25,7 @@ namespace VotingSystemApi.Models
         public int? Voted { get; set; }
         public int? NotVoted { get; set; }
         public DateTime? CancelDate { get; set; }
+        public bool? IsCanceled { get; set; }
 
         public virtual ICollection<Candidate> Candidates { get; set; }
         public virtual ICollection<StudentUnion> StudentUnions { get; set; }

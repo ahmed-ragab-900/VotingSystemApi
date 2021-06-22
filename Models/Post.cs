@@ -18,6 +18,7 @@ namespace VotingSystemApi.Models
         public string Text { get; set; }
         public string UserId { get; set; }
         public DateTime Date { get; set; }
+        public bool? IsDeleted { get; set; }
 
         public virtual User User { get; set; }
         public virtual ICollection<PostComment> PostComments { get; set; }

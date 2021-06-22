@@ -15,6 +15,7 @@ namespace VotingSystemApi.Models
         public bool? IsAccepted { get; set; }
         public bool? IsRefused { get; set; }
         public bool IsPending { get; set; }
+        public bool? IsDeleted { get; set; }
 
         public virtual Commission Commission { get; set; }
         public virtual Election Election { get; set; }

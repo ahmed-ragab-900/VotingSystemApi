@@ -16,11 +16,10 @@ namespace VotingSystemApi.Models
 
         public string Id { get; set; }
         public int? No { get; set; }
-        public string NameAr { get; set; }
-        public string NameEn { get; set; }
-        public string DescriptionAr { get; set; }
-        public string DescriptionEn { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
         public string Image { get; set; }
+        public bool? IsDeleted { get; set; }
 
         public virtual ICollection<Candidate> Candidates { get; set; }
         public virtual ICollection<StudentUnion> StudentUnions { get; set; }

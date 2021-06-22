@@ -1,5 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -34,8 +35,7 @@ namespace VotingSystemApi.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                IConfiguration configuration = Startup.Configuration;
-                optionsBuilder.UseSqlServer(configuration["ConnectionStrings:VotingSystem"]);
+                optionsBuilder.UseSqlServer(Startup.Configuration["ConnectionStrings:VotingSystem"]);
             }
         }
 
@@ -82,25 +82,13 @@ namespace VotingSystemApi.Models
             {
                 entity.Property(e => e.Id).HasMaxLength(50);
 
-                entity.Property(e => e.DescriptionAr)
-                    .IsRequired()
-                    .HasColumnName("Description_Ar");
-
-                entity.Property(e => e.DescriptionEn)
-                    .IsRequired()
-                    .HasColumnName("Description_En");
+                entity.Property(e => e.Description).IsRequired();
 
                 entity.Property(e => e.Image).HasMaxLength(50);
 
-                entity.Property(e => e.NameAr)
+                entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasMaxLength(100)
-                    .HasColumnName("Name_Ar");
-
-                entity.Property(e => e.NameEn)
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .HasColumnName("Name_En");
+                    .HasMaxLength(100);
             });
 
             modelBuilder.Entity<Complaint>(entity =>
@@ -189,11 +177,18 @@ namespace VotingSystemApi.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
+                entity.Property(e => e.UserId).HasMaxLength(50);
+
                 entity.HasOne(d => d.Post)
                     .WithMany(p => p.PostComments)
                     .HasForeignKey(d => d.PostId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tbl_PostComments_tbl_Posts");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.PostComments)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK_PostComments_Users");
             });
 
             modelBuilder.Entity<PostImage>(entity =>
