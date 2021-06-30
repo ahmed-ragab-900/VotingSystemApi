@@ -22,7 +22,7 @@ namespace VotingSystemApi.Services.Elections
 
         public ResponseDTO CurrentElection()
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 Election election = db.Elections.Where(p => p.IsEnded != true && p.IsCanceled != true).OrderByDescending(p => p.EndVoting).FirstOrDefault();
                 if(election != null)
@@ -39,7 +39,7 @@ namespace VotingSystemApi.Services.Elections
 
         public ResponseDTO ElectionById(string id)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 Election election = db.Elections
                     .Include(o => o.Candidates).ThenInclude(o => o.Commission)
@@ -59,7 +59,7 @@ namespace VotingSystemApi.Services.Elections
 
         public ResponseDTO AllElections(Filter f)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 var elections = db.Elections.OrderByDescending(p => p.EndVoting);
                 if (f.SearchText != null && f.SearchText != "")
@@ -84,7 +84,7 @@ namespace VotingSystemApi.Services.Elections
 
         public ResponseDTO AllElectionsWithDetails(Filter f)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 var elections = db.Elections.OrderByDescending(p => p.EndVoting);
                 if (f.SearchText != null && f.SearchText != "")
@@ -112,7 +112,7 @@ namespace VotingSystemApi.Services.Elections
 
         public ResponseDTO StartElection(AddElectionDTO dto)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 Election election = mapper.Map<Election>(dto);
                 election.Id = Guid.NewGuid().ToString();
@@ -135,7 +135,7 @@ namespace VotingSystemApi.Services.Elections
 
         public ResponseDTO CancelElection(string id)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 Election election = db.Elections.FirstOrDefault(p => p.Id == id);
                 if(election != null)

@@ -14,7 +14,7 @@ namespace VotingSystemApi.Services
 {
     public class AutoMapperProfile : Profile
     {
-        private readonly VotintSystemContext db = new VotintSystemContext();
+        private readonly VotingSystemContext db = new VotingSystemContext();
         public AutoMapperProfile()
         {
             // user maps

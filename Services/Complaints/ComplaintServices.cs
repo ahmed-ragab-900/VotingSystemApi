@@ -23,7 +23,7 @@ namespace VotingSystemApi.Services.Complaints
 
         public ResponseDTO AllSolvedComplaints(Filter f)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 var complaints = db.Complaints.Where(p => p.IsDeleted != true && p.IsSolved == true);
                 if (f.SearchText != null && f.SearchText != "")
@@ -50,7 +50,7 @@ namespace VotingSystemApi.Services.Complaints
 
         public ResponseDTO AllNotSolvedComplaints(Filter f)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 var complaints = db.Complaints.Where(p => p.IsDeleted != true && p.IsSolved != true);
                 if (f.SearchText != null && f.SearchText != "")
@@ -77,7 +77,7 @@ namespace VotingSystemApi.Services.Complaints
 
         public ResponseDTO ComplaintById(string id)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 var complaint = db.Complaints.Include(o => o.User).Include(o => o.ComplaintImages).FirstOrDefault(p => p.Id == id);
                 if(complaint != null)
@@ -95,7 +95,7 @@ namespace VotingSystemApi.Services.Complaints
         public ResponseDTO AddComplaint(AddComplaintDTO dto)
         {
             Helper helper = new Helper();
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 dto.Id = Guid.NewGuid().ToString();
                 dto.Date = DateTime.Now;
@@ -126,7 +126,7 @@ namespace VotingSystemApi.Services.Complaints
         public ResponseDTO EditComplaint(EditComplaintDTO dto)
         {
             Helper helper = new Helper();
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 var complaint = db.Complaints.Include(o => o.ComplaintImages).FirstOrDefault(p => p.Id == dto.Id);
                 if (complaint != null)
@@ -161,7 +161,7 @@ namespace VotingSystemApi.Services.Complaints
 
         public ResponseDTO Solved(string id)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 var complaint = db.Complaints.FirstOrDefault(p => p.Id == id);
                 if (complaint != null)
@@ -179,7 +179,7 @@ namespace VotingSystemApi.Services.Complaints
 
         public ResponseDTO DeleteComplaint(string id)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 var complaint = db.Complaints.FirstOrDefault(p => p.Id == id);
                 if (complaint != null)

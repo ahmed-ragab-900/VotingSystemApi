@@ -10,7 +10,7 @@ namespace VotingSystemApi.Validators
     {
         public bool SignInValidator(SignInDTO dto)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 if (string.IsNullOrEmpty(dto.username) || string.IsNullOrEmpty(dto.password))
                 {

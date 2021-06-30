@@ -4,6 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VotingSystemApi.DTO;
+using VotingSystemApi.DTO.Candidates;
+using VotingSystemApi.Services.Candidates;
+using VotingSystemApi.Services.Response;
 
 namespace VotingSystemApi.Controllers
 {
@@ -11,39 +15,125 @@ namespace VotingSystemApi.Controllers
     [ApiController]
     public class CandidateController : BaseController
     {
-        public CandidateController(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
-        { }
+        private readonly ICandidateServices _candidateService;
+        public CandidateController(ICandidateServices candidateServices,IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
+        {
+            _candidateService = candidateServices;
+        }
+        [Route("AllCandidates"), HttpGet]
+        public object AllCandidates(string electionId,[FromQuery] Filter f)
+        {
+            try
+            {
+                var res = _candidateService.AllCandidates(electionId, f);
+                return Ok(res);
+            }
+            catch (Exception)
+            {
 
-        //// GET: api/<CandidateController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+                return BadRequest(ResponseServices.somethingRwong);
+            }
 
-        //// GET api/<CandidateController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        }
+        [Route("AddCandidate"), HttpGet]
+        public object AddCandidates([FromBody] AddCandidateDTO dto)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    return BadRequest(ResponseServices.incorrectModel);
+                }
+                var res = _candidateService.AddCandidate(dto);
+                return Ok(res);
+            }
+            catch (Exception)
+            {
 
-        //// POST api/<CandidateController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
+                return BadRequest(ResponseServices.somethingRwong);
+            }
 
-        //// PUT api/<CandidateController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        }
+        [Route("EditCandidate/{Id}"), HttpPost]
+        public object EditCandidates([FromBody]EditCandidateDTO dto)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    return BadRequest(ResponseServices.incorrectModel);
+                }
+                var res = _candidateService.EditCandidate(dto);
+                return Ok(res);
+            }
+            catch (Exception)
+            {
 
-        //// DELETE api/<CandidateController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+                return BadRequest(ResponseServices.somethingRwong);
+            }
+
+
+        }
+        [Route("DeleteCandidate/{Id}"), HttpDelete]
+        public object DeleteCandidates( string id)
+        {
+            try
+            {
+                var res = _candidateService.DeleteCandidate(id);
+                return Ok(res);
+            }
+            catch (Exception)
+            {
+
+                return BadRequest(ResponseServices.somethingRwong);
+            }
+        }
+        [Route("AcceptCandidate/{Id}"), HttpGet]
+        public object AcceptCandidates(string id)
+        {
+            try
+            {
+                var res = _candidateService.AcceptCandidate(id);
+                return Ok(res);
+            }
+            catch (Exception)
+            {
+
+                return BadRequest(ResponseServices.somethingRwong);        
+            }
+
+        }
+        [Route("RefuseCandidate/{Id}"), HttpGet]
+        public object RefuseCandidates(string id)
+        {
+            try
+            {
+                var res = _candidateService.RefuseCandidate(id);
+                return Ok(res);
+            }
+            catch (Exception)
+            {
+
+                return BadRequest(ResponseServices.somethingRwong);
+            }
+
+        }
+        [Route("UserIsCandidate/{Id}"), HttpGet]
+        public object UserIsCandidates(string id)
+        {
+            try
+            {
+                var res = _candidateService.UserIsCandidate(id);
+                return Ok(res);
+            }
+            catch (Exception)
+            {
+
+                return BadRequest(ResponseServices.somethingRwong);
+            }
+
+        }
+
+
     }
 }

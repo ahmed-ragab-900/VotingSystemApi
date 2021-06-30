@@ -22,7 +22,7 @@ namespace VotingSystemApi.Services.Candidates
 
         public ResponseDTO AllCandidates(string electionId, Filter f)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 var candidates = db.Candidates.Where(p => p.IsDeleted != true);
                 if (f.SearchText != null && f.SearchText != "")
@@ -49,7 +49,7 @@ namespace VotingSystemApi.Services.Candidates
 
         public ResponseDTO AddCandidate(AddCandidateDTO dto)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 dto.Id = Guid.NewGuid().ToString();
                 Candidate candidate = mapper.Map<Candidate>(dto);
@@ -67,7 +67,7 @@ namespace VotingSystemApi.Services.Candidates
 
         public ResponseDTO EditCandidate(EditCandidateDTO dto)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 Candidate candidate = db.Candidates.FirstOrDefault(p => p.Id == dto.Id);
                 if(candidate != null)
@@ -85,7 +85,7 @@ namespace VotingSystemApi.Services.Candidates
 
         public ResponseDTO DeleteCandidate(string id)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 Candidate candidate = db.Candidates.FirstOrDefault(p => p.Id == id);
                 if (candidate != null)
@@ -103,7 +103,7 @@ namespace VotingSystemApi.Services.Candidates
 
         public ResponseDTO AcceptCandidate(string id)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 Candidate candidate = db.Candidates.FirstOrDefault(p => p.Id == id);
                 if (candidate != null)
@@ -123,7 +123,7 @@ namespace VotingSystemApi.Services.Candidates
 
         public ResponseDTO RefuseCandidate(string id)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 Candidate candidate = db.Candidates.FirstOrDefault(p => p.Id == id);
                 if (candidate != null)
@@ -143,7 +143,7 @@ namespace VotingSystemApi.Services.Candidates
 
         public ResponseDTO UserIsCandidate(string userId)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 Election currentElection = db.Elections.OrderByDescending(p => p.EndRequests).Where(p => p.IsCanceled != true && p.IsEnded != true).FirstOrDefault();
                 if(currentElection != null)

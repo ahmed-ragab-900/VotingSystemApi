@@ -23,7 +23,7 @@ namespace VotingSystemApi.Services.Posts
 
         public ResponseDTO AllPosts(string userId, Filter f)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 var posts = db.Posts.Where(p => p.IsDeleted != true);
                 if(f.SearchText != null && f.SearchText != "")
@@ -54,7 +54,7 @@ namespace VotingSystemApi.Services.Posts
 
         public ResponseDTO AddPost(AddPostDTO dto)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 Helper helper = new Helper();
                 dto.Id = Guid.NewGuid().ToString();
@@ -84,7 +84,7 @@ namespace VotingSystemApi.Services.Posts
 
         public ResponseDTO EditPost(string postId, EditPostDTO dto)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 Helper helper = new Helper();
                 Post post = db.Posts.FirstOrDefault(p => p.Id == postId);
@@ -115,7 +115,7 @@ namespace VotingSystemApi.Services.Posts
 
         public ResponseDTO Like(string postId,string userId)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 PostLike PL = new PostLike()
                 {
@@ -131,7 +131,7 @@ namespace VotingSystemApi.Services.Posts
         
         public ResponseDTO DisLike(string postId,string userId)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 PostLike PL = db.PostLikes.FirstOrDefault(p => p.PostId == postId && p.UserId == userId);
                 if(PL != null)
@@ -149,7 +149,7 @@ namespace VotingSystemApi.Services.Posts
 
         public ResponseDTO Comment(CommentDTO dto)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 dto.Id = Guid.NewGuid().ToString();
                 PostComment PC = mapper.Map<PostComment>(dto);
@@ -161,7 +161,7 @@ namespace VotingSystemApi.Services.Posts
 
         public ResponseDTO DeleteComment(string postId, string userId)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 PostComment PC = db.PostComments.FirstOrDefault(p => p.PostId == postId && p.UserId == userId);
                 if (PC != null)

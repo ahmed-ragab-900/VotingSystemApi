@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace VotingSystemApi.Models
 {
-    public partial class VotintSystemContext : DbContext
+    public partial class VotingSystemContext : DbContext
     {
-        public VotintSystemContext()
+        public VotingSystemContext()
         {
         }
 
-        public VotintSystemContext(DbContextOptions<VotintSystemContext> options)
+        public VotingSystemContext(DbContextOptions<VotingSystemContext> options)
             : base(options)
         {
         }

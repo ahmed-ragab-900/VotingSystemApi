@@ -55,7 +55,7 @@ namespace VotingSystemApi.Services.Account
         public ResponseDTO SignUp(AddUserDTO dto)
         {
             User user = mapper.Map<User>(dto);
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 user.Id = Guid.NewGuid().ToString();
                 user.No = Convert.ToInt32(db.Users.Max(p => p.No)) + 1;
@@ -89,7 +89,7 @@ namespace VotingSystemApi.Services.Account
 
         private User GetUser(string username, string password, string id = null)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 if (id == null)
                 {

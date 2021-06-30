@@ -22,7 +22,7 @@ namespace VotingSystemApi.Services.Commissions
 
         public ResponseDTO AllCommission(Filter f)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 var commissions = db.Commissions.Where(p => p.IsDeleted != true);
                 if (f.SearchText != null && f.SearchText != "")
@@ -49,7 +49,7 @@ namespace VotingSystemApi.Services.Commissions
 
         public ResponseDTO CommissionById(string id)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 Commission commission = db.Commissions.FirstOrDefault(p => p.Id == id);
                 if(commission != null)
@@ -67,7 +67,7 @@ namespace VotingSystemApi.Services.Commissions
         public ResponseDTO AddCommission(AddCommissionDTO dto)
         { 
             Helper helper = new Helper();
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 dto.Id = Guid.NewGuid().ToString();
                 if(dto.Image != null || dto.Image != "")
@@ -90,7 +90,7 @@ namespace VotingSystemApi.Services.Commissions
         public ResponseDTO EditCommission(EditCommissionDTO dto)
         {
             Helper helper = new Helper();
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 Commission commission = db.Commissions.FirstOrDefault(p => p.Id == dto.Id);
                 if(commission != null)
@@ -117,7 +117,7 @@ namespace VotingSystemApi.Services.Commissions
 
         public ResponseDTO DeleteCommission(string id)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 Commission commission = db.Commissions.FirstOrDefault(p => p.Id == id);
                 if (commission != null)

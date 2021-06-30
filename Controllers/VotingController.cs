@@ -4,6 +4,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VotingSystemApi.DTO;
+using VotingSystemApi.DTO.VoteDTO;
+using VotingSystemApi.Services.Response;
+using VotingSystemApi.Services.Voting;
 
 namespace VotingSystemApi.Controllers
 {
@@ -11,38 +15,50 @@ namespace VotingSystemApi.Controllers
     [ApiController]
     public class VotingController : BaseController
     {
-        public VotingController(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor) { }
-        
-        //// GET: api/<VotingController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        private readonly IVotingServices _votingServices;
+        public VotingController(IVotingServices votingServices,IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor) 
+        {
+            _votingServices = votingServices;
+        }
+        [Route("VotingToUser"), HttpGet]
+        public object VotingToUser([FromQuery] Filter f )
+        {
+            try
+            {
+                var res = _votingServices.VotingToUser(f);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ResponseServices.somethingRwong);
+            }
+        }
+        [Route("UpdateVoting"), HttpPost]
+        public object UpdateVoting([FromBody] VoteDTO dto)
+        {
+            try
+            {
+                var res = _votingServices.UpdateVoting(dto);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ResponseServices.somethingRwong);
+            }
+        }
+        [Route("CheckByRole"), HttpGet]
+        public object CheckByRole([FromQuery] Filter f)
+        {
+            try
+            {
+                var res = _votingServices.CheckByRole(f);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ResponseServices.somethingRwong);
+            }
+        }
 
-        //// GET api/<VotingController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        //// POST api/<VotingController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        //// PUT api/<VotingController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE api/<VotingController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
     }
 }

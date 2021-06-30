@@ -36,7 +36,7 @@ namespace VotingSystemApi
             services.AddControllersWithViews();
             services.AddAutoMapper(typeof(AutoMapperProfile).Assembly);
 
-            services.AddDbContext<VotintSystemContext>(options =>
+            services.AddDbContext<VotingSystemContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("VotingSystem")));
 
 

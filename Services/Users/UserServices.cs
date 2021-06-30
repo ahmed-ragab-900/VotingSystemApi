@@ -23,7 +23,7 @@ namespace VotingSystemApi.Services.Users
 
         public ResponseDTO AllAuthorizedUsers(Filter f)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 var users = db.Users.Where(p => p.IsAuthorized == true);
                 if (f.SearchText != null && f.SearchText != "")
@@ -48,7 +48,7 @@ namespace VotingSystemApi.Services.Users
 
         public ResponseDTO AllUnAthorizedUsers(Filter f)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 var users = db.Users.Where(p => p.IsAuthorized == false);
                 if (f.SearchText != null && f.SearchText != "")
@@ -73,7 +73,7 @@ namespace VotingSystemApi.Services.Users
 
         public ResponseDTO AllWaitinUsers(Filter f)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 var users = db.Users.Where(p => p.IsAuthorized == null);
                 if (f.SearchText != null && f.SearchText != "")
@@ -98,7 +98,7 @@ namespace VotingSystemApi.Services.Users
 
         public ResponseDTO UserById(string id)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 User user = db.Users.FirstOrDefault(p => p.Id == id);
                 if (user != null)
@@ -117,7 +117,7 @@ namespace VotingSystemApi.Services.Users
 
         public ResponseDTO Authorize(string id)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 User user = db.Users.FirstOrDefault(p => p.Id == id);
                 if (user != null)
@@ -141,7 +141,7 @@ namespace VotingSystemApi.Services.Users
 
         public ResponseDTO UnAuthorize(string id)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 User user = db.Users.FirstOrDefault(p => p.Id == id);
                 if (user != null)
@@ -166,7 +166,7 @@ namespace VotingSystemApi.Services.Users
         public ResponseDTO UpdateProfileImage(string id, string base64)
         {
             Helper helper = new Helper();
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 User user = db.Users.FirstOrDefault(p => p.Id == id);
                 if (user != null)
@@ -193,7 +193,7 @@ namespace VotingSystemApi.Services.Users
 
         public ResponseDTO UpdateUserDate(string id, UpdateUserDTO dto)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 User user = db.Users.FirstOrDefault(p => p.Id == id);
                 if (user != null)
@@ -226,7 +226,7 @@ namespace VotingSystemApi.Services.Users
         
         public ResponseDTO UpdatePassword(string id, string newPassword)
         {
-            using (VotintSystemContext db = new VotintSystemContext())
+            using (VotingSystemContext db = new VotingSystemContext())
             {
                 User user = db.Users.FirstOrDefault(p => p.Id == id);
                 if (user != null)
