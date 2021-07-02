@@ -1,25 +1,21 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projects\\VotingSystemApi\\VotingSystemApi.csproj": {}
+    "H:\\Apps\\Final Project\\VotingSystemApi\\VotingSystemApi\\VotingSystemApi.csproj": {}
   },
   "projects": {
-    "D:\\Projects\\VotingSystemApi\\VotingSystemApi.csproj": {
+    "H:\\Apps\\Final Project\\VotingSystemApi\\VotingSystemApi\\VotingSystemApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projects\\VotingSystemApi\\VotingSystemApi.csproj",
+        "projectUniqueName": "H:\\Apps\\Final Project\\VotingSystemApi\\VotingSystemApi\\VotingSystemApi.csproj",
         "projectName": "VotingSystemApi",
-        "projectPath": "D:\\Projects\\VotingSystemApi\\VotingSystemApi.csproj",
-        "packagesPath": "C:\\Users\\engah\\.nuget\\packages\\",
-        "outputPath": "D:\\Projects\\VotingSystemApi\\obj\\",
+        "projectPath": "H:\\Apps\\Final Project\\VotingSystemApi\\VotingSystemApi\\VotingSystemApi.csproj",
+        "packagesPath": "C:\\Users\\Ahmed\\.nuget\\packages\\",
+        "outputPath": "H:\\Apps\\Final Project\\VotingSystemApi\\VotingSystemApi\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
-        ],
         "configFilePaths": [
-          "C:\\Users\\engah\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\Ahmed\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
@@ -133,7 +129,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }
