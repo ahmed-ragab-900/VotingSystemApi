@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VotingSystemApi.DTO;
-using VotingSystemApi.DTO.VoteDTO;
+using VotingSystemApi.DTO.Vote;
 using VotingSystemApi.Services.Response;
 using VotingSystemApi.Services.Voting;
 

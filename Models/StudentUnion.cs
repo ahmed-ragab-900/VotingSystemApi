@@ -12,6 +12,8 @@ namespace VotingSystemApi.Models
         public string CommissionId { get; set; }
         public bool? IsPresident { get; set; }
         public bool? IsAssistant { get; set; }
+        // Add This attr
+        public bool? IsDeleted { get; set; }
         public string ElectionId { get; set; }
 
         public virtual Commission Commission { get; set; }

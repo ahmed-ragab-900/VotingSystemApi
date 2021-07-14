@@ -11,6 +11,7 @@ using VotingSystemApi.Services.Response;
 
 namespace VotingSystemApi.Services.StudentUnion
 {
+
     public class StudentUnionServices : IStudentUnionServices
     {
     private readonly IResponseServices responseServices;
