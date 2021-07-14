@@ -9,8 +9,7 @@ using VotingSystemApi.Services.Response;
 
 namespace VotingSystemApi.Controllers
 {
-    [Authorize]
-    [ApiController]
+    [ApiController, Authorize]
     public class ElectionController : BaseController
     {
         private readonly IElectionServices electionServices;
@@ -25,15 +24,8 @@ namespace VotingSystemApi.Controllers
         {
             try
             {
-                if (IsSuperAdmin)
-                {
-                    var res = electionServices.CurrentElection();
-                    return Ok(res);
-                }
-                else
-                {
-                    return BadRequest();
-                }
+                var res = electionServices.CurrentElection();
+                return Ok(res);
             }
             catch
             {

@@ -1,23 +1,38 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using VotingSystemApi.Models;
+using VotingSystemApi.Services.Response;
+using VotingSystemApi.Services.StudentUnion;
 
 namespace VotingSystemApi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [ApiController, Authorize]
     public class StudentUnionController : BaseController
     {
-        public StudentUnionController(IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor) { }
-        //// GET: api/<StudentUnionController>
-        //[HttpGet]
-        //public IEnumerable<string> Get()
-        //{
-        //    return new string[] { "value1", "value2" };
-        //}
+        private readonly IStudentUnionServices _unionServices;
+        public StudentUnionController(IHttpContextAccessor httpContextAccessor, IStudentUnionServices unionServices) : base(httpContextAccessor) 
+        {
+            _unionServices = unionServices;
+        }
+        // GET: api/<StudentUnionController>
+        [HttpGet]
+        public object StudentUonion()
+        {
+            try
+            {
+                var res = _unionServices.StudentUnion();
+                return Ok(res);
+            }
+            catch
+            {
+                return BadRequest(ResponseServices.somethingRwong);
+            }
+        }
 
         //// GET api/<StudentUnionController>/5
         //[HttpGet("{id}")]

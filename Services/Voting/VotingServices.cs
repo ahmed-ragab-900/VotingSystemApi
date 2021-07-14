@@ -21,6 +21,29 @@ namespace VotingSystemApi.Services.Voting
             _responseServices = responseServices;
             _mapper = mapper;
         }
+
+        public ResponseDTO Voteing(VotingDTO dto) 
+        {
+            using (VotingSystemContext db = new VotingSystemContext())
+            {
+                dto.votes.ForEach(vote => 
+                {
+                    Vote v = new Vote()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        ElectionId = dto.ElectionId,
+                        VoterId = dto.VoterId,
+                        CommissionId = vote.CommissionId,
+                        UserId = vote.UserId,
+                        Date = DateTime.Now
+                    };
+                    db.Votes.Add(v);
+                    db.SaveChanges();
+                });
+                return _responseServices.passedWithMessage("Done");
+            }
+        }
+
         public ResponseDTO VotingToUser(Filter f)
         {
             using (VotingSystemContext db = new VotingSystemContext()) 

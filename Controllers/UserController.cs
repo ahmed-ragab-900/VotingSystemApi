@@ -8,8 +8,7 @@ using VotingSystemApi.Services.Users;
 
 namespace VotingSystemApi.Controllers
 {
-    [Authorize]
-    [ApiController]
+    [ApiController, Authorize]
     public class UserController : BaseController
     {
         private readonly IUserServices userServices;

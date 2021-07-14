@@ -73,7 +73,9 @@ namespace VotingSystemApi.Services.Posts
                         db.PostImages.Add(PI);
                         db.SaveChanges();
                     }
-                    return responseServices.passedWithMessage(ResponseServices.Saved);
+                    var postDto = mapper.Map<PostDTO>(post);
+                    postDto.IsLiked = false;
+                    return responseServices.passed(postDto);
                 }
                 else
                 {

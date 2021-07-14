@@ -11,6 +11,5 @@ namespace VotingSystemApi.DTO.Candidates
         public string UserId { get; set; }
         public string CommissionId { get; set; }
         public string ElectionId { get; set; }
-        public DateTime Date { get; set; }
     }
 }

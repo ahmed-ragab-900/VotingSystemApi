@@ -29,22 +29,26 @@ namespace VotingSystemApi.Services.Account
 
         public ResponseDTO SignIn(string serverPath, SignInDTO dto)
         {
-            
+            VotingSystemContext db = new VotingSystemContext();
             AccountValidator validator = new AccountValidator();
             
             if (validator.SignInValidator(dto))
             {
                 User user = GetUser(dto.username, dto.password);
-                //if(user.Image != null)
-                //{
-                //    user.Image = serverPath + "/images/" + user.Image;
-                //}
-                string token = auth.GenerateJSONWebToken(user.Id, user.RoleId, user.Name, user.AcademicNumber);
-                return responseServices.passed(new
+                if (user.IsAuthorized == true)
                 {
-                    token = token,
-                    user = mapper.Map<UserDTO>(user)
-                });
+                    string token = auth.GenerateJSONWebToken(user.Id, user.RoleId, user.Name, user.AcademicNumber);
+                    return responseServices.passed(new
+                    {
+                        token = token,
+                        electionId = db.Elections.Where(p => p.IsEnded != true && p.IsCanceled != true && p.EndVoting >= DateTime.Now).OrderByDescending(p => p.EndVoting).FirstOrDefault()?.Id,
+                        user = mapper.Map<UserDTO>(user)
+                    });
+                }
+                else
+                {
+                    return responseServices.passedWithMessage("You are not authorized");
+                }
             }
             else
             {

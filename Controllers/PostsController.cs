@@ -9,8 +9,7 @@ using VotingSystemApi.Services.Response;
 
 namespace VotingSystemApi.Controllers
 {
-    [Authorize]
-    [ApiController]
+    [ApiController , Authorize]
     public class PostsController : BaseController
     {
         private readonly IPostServices postServices;

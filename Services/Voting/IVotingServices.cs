@@ -9,6 +9,7 @@ namespace VotingSystemApi.Services.Voting
 {
     public interface IVotingServices
     {
+        public ResponseDTO Voteing(VotingDTO dto);
         public ResponseDTO VotingToUser(Filter f);
         public ResponseDTO UpdateVoting(VoteDTO dto);
         public ResponseDTO CheckByRole(Filter f);

@@ -78,7 +78,7 @@ namespace VotingSystemApi.Services.Commissions
                 db.Commissions.Add(commission);
                 if(db.SaveChanges() > 0)
                 {
-                    return responseServices.passedWithMessage(ResponseServices.Saved);
+                    return responseServices.passed(mapper.Map<CommissionDTO>(commission));
                 }
                 else
                 {

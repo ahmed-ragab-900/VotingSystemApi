@@ -47,16 +47,29 @@ namespace VotingSystemApi.Services.Candidates
             }
         }
 
+        public ResponseDTO WaitingCandidate(string electionId)
+        {
+            using (VotingSystemContext db = new VotingSystemContext())
+            {
+                var candidates = db.Candidates.Where(p => p.IsDeleted != true && p.ElectionId == electionId && p.IsPending == true);
+                var currentCandidates = candidates.OrderByDescending(p => p.Date).Include(o => o.User).Include(o => o.Commission);
+                var output = mapper.Map<List<CandidateDTO>>(currentCandidates.ToList());
+                return responseServices.passed(output);
+            }
+        }
+
         public ResponseDTO AddCandidate(AddCandidateDTO dto)
         {
             using (VotingSystemContext db = new VotingSystemContext())
             {
                 dto.Id = Guid.NewGuid().ToString();
                 Candidate candidate = mapper.Map<Candidate>(dto);
+                candidate.Date = DateTime.Now;
                 db.Candidates.Add(candidate);
                 if (db.SaveChanges() > 0)
                 {
-                    return responseServices.passedWithMessage(ResponseServices.Saved);
+                    Candidate newCandidate = db.Candidates.Where(p => p.Id == candidate.Id).Include(p => p.User).Include(p => p.Commission).FirstOrDefault();
+                    return responseServices.passed(mapper.Map<CandidateDTO>(newCandidate));
                 }
                 else
                 {
@@ -70,7 +83,7 @@ namespace VotingSystemApi.Services.Candidates
             using (VotingSystemContext db = new VotingSystemContext())
             {
                 Candidate candidate = db.Candidates.FirstOrDefault(p => p.Id == dto.Id);
-                if(candidate != null)
+                if (candidate != null)
                 {
                     candidate.CommissionId = dto.CommissionId;
                     db.SaveChanges();
@@ -98,6 +111,19 @@ namespace VotingSystemApi.Services.Candidates
                 {
                     return responseServices.failed("This Candidate doesn't exist in database");
                 }
+            }
+        }
+
+        public ResponseDTO Commissions()
+        {
+            using (VotingSystemContext db = new VotingSystemContext())
+            {
+                var commissions = db.Commissions.Where(p => p.IsDeleted != true).Select(x => new
+                {
+                    x.Id,
+                    x.Name,
+                }).ToList();
+                return responseServices.passed(commissions);
             }
         }
 
@@ -146,7 +172,7 @@ namespace VotingSystemApi.Services.Candidates
             using (VotingSystemContext db = new VotingSystemContext())
             {
                 Election currentElection = db.Elections.OrderByDescending(p => p.EndRequests).Where(p => p.IsCanceled != true && p.IsEnded != true).FirstOrDefault();
-                if(currentElection != null)
+                if (currentElection != null)
                 {
                     bool exist = db.Candidates.Any(p => p.ElectionId == currentElection.Id && p.UserId == userId);
                     if (exist)

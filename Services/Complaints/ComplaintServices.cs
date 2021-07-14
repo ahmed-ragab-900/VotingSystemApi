@@ -114,7 +114,7 @@ namespace VotingSystemApi.Services.Complaints
                         db.ComplaintImages.Add(CI);
                         db.SaveChanges();
                     }
-                    return responseServices.passedWithMessage(ResponseServices.Saved);
+                    return responseServices.passed(mapper.Map<ComplaintDTO>(complaint));
                 }
                 else
                 {

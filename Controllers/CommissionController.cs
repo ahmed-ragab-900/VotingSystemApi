@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using VotingSystemApi.DTO;
@@ -8,8 +9,7 @@ using VotingSystemApi.Services.Response;
 
 namespace VotingSystemApi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [ApiController , Authorize]
     public class CommissionController : BaseController
     {
         private readonly ICommissionServices commissionServices;

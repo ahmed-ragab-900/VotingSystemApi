@@ -19,4 +19,5 @@ namespace VotingSystemApi.DTO.Elections
         public bool? IsCanceled { get; set; }
         public List<ElectionCommssionsDTO> Details { get; set; }
     }
+
 }

@@ -24,7 +24,11 @@ namespace VotingSystemApi.Services.Elections
         {
             using (VotingSystemContext db = new VotingSystemContext())
             {
-                Election election = db.Elections.Where(p => p.IsEnded != true && p.IsCanceled != true).OrderByDescending(p => p.EndVoting).FirstOrDefault();
+                Election election = db.Elections.Where(p => p.IsEnded != true && p.IsCanceled != true && p.EndVoting >= DateTime.Now)
+                    .OrderByDescending(p => p.EndVoting)
+                    .Include(p => p.Candidates).ThenInclude(p => p.Commission)
+                    .Include(p => p.Candidates).ThenInclude(p => p.User)
+                    .FirstOrDefault();
                 if(election != null)
                 {
                     ElectionWithDetailsDTO electionDTO = mapper.Map<ElectionWithDetailsDTO>(election);
@@ -124,7 +128,7 @@ namespace VotingSystemApi.Services.Elections
                 db.Elections.Add(election);
                 if(db.SaveChanges() > 0)
                 {
-                    return responseServices.passedWithMessage(ResponseServices.Saved);
+                    return responseServices.passed(mapper.Map<ElectionWithDetailsDTO>(election));
                 }
                 else
                 {

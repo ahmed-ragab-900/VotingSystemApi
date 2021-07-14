@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,17 +12,17 @@ using VotingSystemApi.Services.Response;
 
 namespace VotingSystemApi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [ApiController, Authorize]
     public class CandidateController : BaseController
     {
         private readonly ICandidateServices _candidateService;
-        public CandidateController(ICandidateServices candidateServices,IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
+        public CandidateController(ICandidateServices candidateServices, IHttpContextAccessor httpContextAccessor) : base(httpContextAccessor)
         {
             _candidateService = candidateServices;
         }
+
         [Route("AllCandidates"), HttpGet]
-        public object AllCandidates(string electionId,[FromQuery] Filter f)
+        public object AllCandidates(string electionId, [FromQuery] Filter f)
         {
             try
             {
@@ -30,17 +31,44 @@ namespace VotingSystemApi.Controllers
             }
             catch (Exception)
             {
-
                 return BadRequest(ResponseServices.somethingRwong);
             }
-
         }
-        [Route("AddCandidate"), HttpGet]
+
+        [Route("WaitingCandidate"), HttpGet]
+        public object WaitingCandidate(string electionId)
+        {
+            try
+            {
+                var res = _candidateService.WaitingCandidate(electionId);
+                return Ok(res);
+            }
+            catch (Exception)
+            {
+                return BadRequest(ResponseServices.somethingRwong);
+            }
+        }
+
+        [Route("Commissions"), HttpGet]
+        public object Commissions()
+        {
+            try
+            {
+                var res = _candidateService.Commissions();
+                return Ok(res);
+            }
+            catch (Exception ed)
+            {
+                return BadRequest(ResponseServices.somethingRwong + $"\n {ed.Message}");
+            }
+        }
+
+        [Route("AddCandidate"), HttpPost]
         public object AddCandidates([FromBody] AddCandidateDTO dto)
         {
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                 {
                     return BadRequest(ResponseServices.incorrectModel);
                 }
@@ -49,13 +77,12 @@ namespace VotingSystemApi.Controllers
             }
             catch (Exception)
             {
-
                 return BadRequest(ResponseServices.somethingRwong);
             }
-
         }
-        [Route("EditCandidate/{Id}"), HttpPost]
-        public object EditCandidates([FromBody]EditCandidateDTO dto)
+
+        [Route("EditCandidate"), HttpPut]
+        public object EditCandidates([FromBody] EditCandidateDTO dto)
         {
             try
             {
@@ -68,14 +95,12 @@ namespace VotingSystemApi.Controllers
             }
             catch (Exception)
             {
-
                 return BadRequest(ResponseServices.somethingRwong);
             }
-
-
         }
+
         [Route("DeleteCandidate/{Id}"), HttpDelete]
-        public object DeleteCandidates( string id)
+        public object DeleteCandidates(string id)
         {
             try
             {
@@ -84,11 +109,11 @@ namespace VotingSystemApi.Controllers
             }
             catch (Exception)
             {
-
                 return BadRequest(ResponseServices.somethingRwong);
             }
         }
-        [Route("AcceptCandidate/{Id}"), HttpGet]
+
+        [Route("AcceptCandidate/{Id}"), HttpPut]
         public object AcceptCandidates(string id)
         {
             try
@@ -98,12 +123,11 @@ namespace VotingSystemApi.Controllers
             }
             catch (Exception)
             {
-
-                return BadRequest(ResponseServices.somethingRwong);        
+                return BadRequest(ResponseServices.somethingRwong);
             }
-
         }
-        [Route("RefuseCandidate/{Id}"), HttpGet]
+
+        [Route("RefuseCandidate/{Id}"), HttpPut]
         public object RefuseCandidates(string id)
         {
             try
@@ -113,11 +137,10 @@ namespace VotingSystemApi.Controllers
             }
             catch (Exception)
             {
-
                 return BadRequest(ResponseServices.somethingRwong);
             }
-
         }
+
         [Route("UserIsCandidate/{Id}"), HttpGet]
         public object UserIsCandidates(string id)
         {
@@ -128,12 +151,8 @@ namespace VotingSystemApi.Controllers
             }
             catch (Exception)
             {
-
                 return BadRequest(ResponseServices.somethingRwong);
             }
-
         }
-
-
     }
 }

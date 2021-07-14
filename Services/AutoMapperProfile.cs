@@ -48,11 +48,12 @@ namespace VotingSystemApi.Services
                 {
                     CommissionId = x.FirstOrDefault().CommissionId,
                     CommissionName = x.FirstOrDefault().Commission.Name,
-                    candidates = x.Select(u => new CandidateDetailsDTO() 
+                    candidates = x.Where(p => p.IsPending != true && p.IsDeleted != true && p.IsRefused != true && p.IsAccepted == true).Select(u => new CandidateDetailsDTO() 
                     {
                         UserId = u.UserId,
                         UserName = u.User.Name,
                         UserImage = u.User.Image != null ? Helper.serverPath + u.User.Image : null,
+                        UserYear = u.User.Year ?? 0,
                         votes = db.Votes.Where(p => p.UserId == u.UserId && p.ElectionId == src.Id && p.CommissionId == x.FirstOrDefault().CommissionId).Count()
                     }).ToList()
                 })));
