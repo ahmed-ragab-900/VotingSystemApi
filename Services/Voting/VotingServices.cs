@@ -70,28 +70,6 @@ namespace VotingSystemApi.Services.Voting
                 
             }
         }
-        public ResponseDTO CheckByRole ( Filter f)
-        {
-            using (VotingSystemContext db  = new VotingSystemContext())
-            {
-                var vote = db.Votes.Select(z=>z.User.RoleId).FirstOrDefault();
-                if (vote == 3 )
-                {
-                    return _responseServices.passed(VotingToUser(f));
-                }
-                else
-                {
-                    if (vote == 4)
-                    {
-                        var query = db.Users.FirstOrDefault();
-                        query.IsAuthorized = false;
-                        return _responseServices.passed(VotingToUser(f));
-
-                    }
-                    return _responseServices.passedWithMessage("There is something wrong happened ");
-                }
-            }
-        }
 
     }
 }

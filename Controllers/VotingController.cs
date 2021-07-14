@@ -46,19 +46,6 @@ namespace VotingSystemApi.Controllers
                 return BadRequest(ResponseServices.somethingRwong);
             }
         }
-        [Route("CheckByRole"), HttpGet]
-        public object CheckByRole([FromQuery] Filter f)
-        {
-            try
-            {
-                var res = _votingServices.CheckByRole(f);
-                return Ok(res);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ResponseServices.somethingRwong);
-            }
-        }
 
     }
 }

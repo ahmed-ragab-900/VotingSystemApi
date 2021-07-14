@@ -11,6 +11,5 @@ namespace VotingSystemApi.Services.Voting
     {
         public ResponseDTO VotingToUser(Filter f);
         public ResponseDTO UpdateVoting(VoteDTO dto);
-        public ResponseDTO CheckByRole(Filter f);
     }
 }
